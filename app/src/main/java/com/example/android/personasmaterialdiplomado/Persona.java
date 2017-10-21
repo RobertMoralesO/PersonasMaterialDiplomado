@@ -24,6 +24,14 @@ public class Persona {
         this.sexo=sexo;
     }
 
+    public Persona(String id,int foto,String cedula, String nombre, String apellido, int sexo){
+        this.foto=foto;
+        this.cedula=cedula;
+        this.nombre=nombre;
+        this.apellido=apellido;
+        this.sexo=sexo;
+        this.id=id;
+    }
     public Persona(String id){
 
         this.id=id;
@@ -90,5 +98,9 @@ public class Persona {
 
     public void eliminar(){
         Datos.eliminarPersona(this);
+    }
+
+    public void modificar(){
+         Datos.Modificar(this);
     }
 }

@@ -63,6 +63,8 @@ public class DetallePersona extends AppCompatActivity {
 
     }
 
+
+
     public void eliminar(View v){
         String positivo,negativo;
 
@@ -99,5 +101,12 @@ public class DetallePersona extends AppCompatActivity {
         finish();
         Intent i = new Intent(DetallePersona.this,Principal.class);
         startActivity(i);
+    }
+
+    public void ModificarPersona(View v) {
+        Intent i = new Intent(DetallePersona.this,Modificar.class);
+        i.putExtra("datos",bundle);
+        startActivity(i);
+
     }
 }

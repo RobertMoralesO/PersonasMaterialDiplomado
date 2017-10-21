@@ -1,5 +1,7 @@
 package com.example.android.personasmaterialdiplomado;
 
+import android.util.Log;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,5 +34,21 @@ public class Datos {
         databaseReference.child(db).child(p.getId()).removeValue();
 
     }
+    public static int ExistePersonaIndex(String cedula){
+        Log.i("TEST",""+personas.size());
+        for (int i = 0; i < personas.size(); i++) {
+            if (personas.get(i).getCedula().equals(cedula)){
+                return i;
+            }
+        }
+        return -1;
+
+    }
+    public static void Modificar(Persona p) {
+       databaseReference.child(db).child(p.getId()).setValue(p);
+    }
+
+
+
 }
 

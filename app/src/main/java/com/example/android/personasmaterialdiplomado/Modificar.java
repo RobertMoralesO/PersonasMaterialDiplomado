@@ -13,6 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -21,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class Modificar extends AppCompatActivity {
+public class Modificar extends AppCompatActivity implements RewardedVideoAdListener{
     private EditText txtnombre;
     private  EditText txtapellido,txtcedula;
     private TextInputLayout icajaNombre;
@@ -38,6 +43,7 @@ public class Modificar extends AppCompatActivity {
     private ImageView foto;
     private Uri filePath;
     private StorageReference storageReference;
+    private RewardedVideoAd rewardedVideoAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +82,15 @@ public class Modificar extends AppCompatActivity {
                 Picasso.with(Modificar.this).load(uri).into(foto);
             }
         });
+
+        rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
+        rewardedVideoAd.setRewardedVideoAdListener(this);
+
+        otroVideo();
+    }
+
+    public void otroVideo(){
+        rewardedVideoAd.loadAd(res.getString(R.string.id_banner_video), new AdRequest.Builder().build());
     }
 
     public void Modificar(View v){
@@ -108,19 +123,9 @@ public class Modificar extends AppCompatActivity {
         Cancelar();
     }
     public void Cancelar(){
-       /* String nom = txtnombre.getText().toString();
-        String ape = txtapellido.getText().toString();
-        String ced = txtcedula.getText().toString();
-        Intent i = new Intent(Modificar.this,DetallePersona.class);
-        Bundle b = new Bundle();
-        b.putString("cedula",ced);
-        b.putString("nombre",nom);
-        b.putString("apellido",ape);
-
-        b.putInt("sexo",genero_spiner.getSelectedItemPosition());
-        b.putInt("foto",fot);
-        i.putExtra("datos",b);
-        startActivity(i);*/
+        if(rewardedVideoAd.isLoaded()){
+            rewardedVideoAd.show();
+        }
         finish();
         Intent i = new Intent(Modificar.this,Principal.class);
         startActivity(i);
@@ -157,6 +162,41 @@ public class Modificar extends AppCompatActivity {
                 Cancelar();
             }
         });
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+
+    }
+
+    @Override
+    public void onRewarded(RewardItem rewardItem) {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+
+    }
+
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int i) {
 
     }
 }

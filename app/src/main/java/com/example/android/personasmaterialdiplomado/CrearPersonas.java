@@ -17,6 +17,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -41,6 +45,9 @@ public class CrearPersonas extends AppCompatActivity {
     private Uri filePath;
     private ImageView foto;
     private StorageReference storageReference;
+    private AdView adView;
+    private AdRequest adRequest;
+    private InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +68,32 @@ public class CrearPersonas extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,opc);
         sexo.setAdapter(adapter);
 
-       foto = (ImageView)findViewById(R.id.fotoCrear);
-        iniciar_fotos();
+        adView = (AdView)findViewById(R.id.adView);
+        adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
+        interstitialAd = new InterstitialAd(this);
+        interstitialAd.setAdUnitId(res.getString(R.string.id_banner_inter));
+        interstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                otroInter();
+            }
+        });
+        otroInter();
+
+        foto = (ImageView)findViewById(R.id.fotoCrear);
+
 
 
     }
 
-    public void iniciar_fotos(){
-        fotos = new ArrayList<>();
-        fotos.add(R.drawable.images);
-        fotos.add(R.drawable.images2);
-        fotos.add(R.drawable.images3);
+    public void otroInter(){
+        AdRequest adRequest = new AdRequest.Builder().build();
+        interstitialAd.loadAd(adRequest);
     }
+
+
 
     public void guadar(View v){
 
@@ -100,6 +121,9 @@ public class CrearPersonas extends AppCompatActivity {
         sexo.setSelection(0);
         txtCedula.requestFocus();
         foto.setImageDrawable(ResourcesCompat.getDrawable(res,android.R.drawable.ic_menu_gallery,null));
+        if(interstitialAd.isLoaded()){
+            interstitialAd.show();
+        }
     }
 
     public void onBackPressed(){

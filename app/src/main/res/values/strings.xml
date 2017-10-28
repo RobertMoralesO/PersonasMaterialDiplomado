@@ -31,4 +31,6 @@
     <string name="mensaje_exito_modificar"> Persona Modificada</string>
     <string name="error_modificar">Error al Modificar</string>
     <string name="mensaje_seleccion">Selecciones una imagen</string>
+    <string name="id_banner_admob">ca-app-pub-7003300354423036/9219509661</string>
+    <string name="id_banner_inter">ca-app-pub-3940256099942544/1033173712</string>
 </resources>

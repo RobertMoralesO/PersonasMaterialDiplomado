@@ -33,5 +33,10 @@
     <string name="mensaje_seleccion">Selecciones una imagen</string>
     <string name="id_banner_admob">ca-app-pub-7003300354423036/9219509661</string>
     <string name="id_banner_inter">ca-app-pub-7003300354423036/3011170445</string>
-    <string name="id_banner_video">ca-app-pub-3940256099942544/5224354917</string>
+    <string name="id_banner_video">ca-app-pub-7003300354423036/6699134018</string>
+    <string name="login">LOGIN</string>
+    <string name="email">Email</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="log_in">LogIn</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
 </resources>

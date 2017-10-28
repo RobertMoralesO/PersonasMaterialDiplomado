@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -104,6 +105,10 @@ public class Modificar extends AppCompatActivity implements RewardedVideoAdListe
             p.modificar();
             if (filePath !=null)subir_foto(fot);
             Snackbar.make(v, res.getString(R.string.mensaje_exito_modificar), Snackbar.LENGTH_LONG).setAction("action", null).show();
+            if(rewardedVideoAd.isLoaded()){
+                rewardedVideoAd.show();
+
+            }
            // Cancelar();
         }else{
             if(Metodos.exitencia_persona(Datos.obtenerPersonas(),ced)){
@@ -120,15 +125,14 @@ public class Modificar extends AppCompatActivity implements RewardedVideoAdListe
 
     }
     public void Cancelar(View v){
-        Cancelar();
+      Cancelar();
     }
     public void Cancelar(){
-        if(rewardedVideoAd.isLoaded()){
-            rewardedVideoAd.show();
-        }
+
         finish();
         Intent i = new Intent(Modificar.this,Principal.class);
         startActivity(i);
+
 
     }
     public void onBackPressed(){
@@ -159,6 +163,7 @@ public class Modificar extends AppCompatActivity implements RewardedVideoAdListe
         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                 Cancelar();
             }
         });

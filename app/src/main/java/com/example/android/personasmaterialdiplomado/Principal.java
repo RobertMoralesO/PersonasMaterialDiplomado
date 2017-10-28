@@ -3,8 +3,13 @@ package com.example.android.personasmaterialdiplomado;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +18,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class Principal extends AppCompatActivity implements  AdaptadorPersona.OnPersonaClickListener{
+public class Principal extends AppCompatActivity implements  AdaptadorPersona.OnPersonaClickListener, NavigationView.OnNavigationItemSelectedListener{
     private RecyclerView listado;
     private ArrayList<Persona> personas;
     private Resources res;
@@ -30,6 +36,10 @@ public class Principal extends AppCompatActivity implements  AdaptadorPersona.On
     private Intent i;
     private DatabaseReference databaseReference;
     private final String BD= "Personas";
+    private DrawerLayout drawerLayout;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +59,15 @@ public class Principal extends AppCompatActivity implements  AdaptadorPersona.On
 
         listado.setLayoutManager(llm);
         listado.setAdapter(adapter);
+
+        drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.abrir,R.string.cerrar);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        if(navigationView!=null){
+            navigationView.setNavigationItemSelectedListener(Principal.this);
+        }
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -80,6 +99,14 @@ public class Principal extends AppCompatActivity implements  AdaptadorPersona.On
                 startActivity(i);
             }
         });
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        authStateListener = new FirebaseAuth.AuthStateListener(){
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+
+            }
+        };
     }
 
     @Override
@@ -95,5 +122,38 @@ public class Principal extends AppCompatActivity implements  AdaptadorPersona.On
 
         i.putExtra("datos",b);
         startActivity(i);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.salir:
+                signOut();
+
+                break;
+        }
+        item.isChecked();
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void signOut(){
+        firebaseAuth.signOut();
+        Intent i = new Intent(Principal.this,Login.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseAuth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        firebaseAuth.removeAuthStateListener(authStateListener);
     }
 }

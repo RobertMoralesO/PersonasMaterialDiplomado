@@ -40,4 +40,8 @@
     <string name="log_in">LogIn</string>
     <string name="crear_cuenta">Crear Cuenta</string>
     <string name="mensaje_cuenta_creada_exitosamente">Cuenta Creada Exitosamente</string>
+    <string name="persona">Principal</string>
+    <string name="action_salir">Salir</string>
+    <string name="abrir">Abrir</string>
+    <string name="cerrar">cerrar</string>
 </resources>

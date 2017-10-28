@@ -3,6 +3,7 @@ package com.example.android.personasmaterialdiplomado;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
@@ -13,17 +14,23 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
 public class DetallePersona extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private Persona p;
-    private String cedula,nombre,apellido, id;
-    private int fot,sexo;
+    private String cedula,nombre,apellido, id, fot;
+    private int sexo;
     private Bundle bundle;
     private Intent i;
     private ImageView foto;
     private Resources res;
     private TextView ced,nomb,app,sex;
     private String [] opc;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +40,7 @@ public class DetallePersona extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar2);
        setSupportActionBar(toolbar);
 
+        storageReference = FirebaseStorage.getInstance().getReference();
         ced =(TextView)findViewById(R.id.lblCedulaD);
         nomb = (TextView)findViewById(R.id.lblNombreD);
         app = (TextView)findViewById(R.id.lblApellidoD);
@@ -47,14 +55,20 @@ public class DetallePersona extends AppCompatActivity {
         cedula = bundle.getString("cedula");
         nombre = bundle.getString("nombre");
         apellido = bundle.getString("apellido");
-        fot = bundle.getInt("foto");
+        fot = bundle.getString("foto");
         sexo = bundle.getInt("sexo");
         id = bundle.getString("id");
         opc = res.getStringArray(R.array.sexo);
 
 
         collapsingToolbarLayout.setTitle(nombre+" "+apellido);
-        foto.setImageDrawable(ResourcesCompat.getDrawable(res,fot,null));
+        //foto.setImageDrawable(ResourcesCompat.getDrawable(res,fot,null));
+        storageReference.child(fot).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.with(DetallePersona.this).load(uri).into(foto);
+            }
+        });
         ced.setText(cedula);
         nomb.setText(nombre);
         app.setText(apellido);

@@ -40,7 +40,6 @@ public class Principal extends AppCompatActivity implements  AdaptadorPersona.On
         listado = (RecyclerView)findViewById(R.id.lstOpciones);
 
         res = this.getResources();
-        //personas = Datos.obtenerPersonas();
         personas = new ArrayList<>();
 
         llm = new LinearLayoutManager(this);
@@ -92,7 +91,7 @@ public class Principal extends AppCompatActivity implements  AdaptadorPersona.On
         b.putString("nombre",p.getNombre());
         b.putString("apellido",p.getApellido());
         b.putInt("sexo",p.getSexo());
-        b.putInt("foto",p.getFoto());
+        b.putString("foto",p.getFoto());
 
         i.putExtra("datos",b);
         startActivity(i);

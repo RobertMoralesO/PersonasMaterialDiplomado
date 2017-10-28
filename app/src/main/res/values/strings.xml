@@ -30,4 +30,5 @@
     <string name="existe_persona">La persona ya esta registrada</string>
     <string name="mensaje_exito_modificar"> Persona Modificada</string>
     <string name="error_modificar">Error al Modificar</string>
+    <string name="mensaje_seleccion">Selecciones una imagen</string>
 </resources>

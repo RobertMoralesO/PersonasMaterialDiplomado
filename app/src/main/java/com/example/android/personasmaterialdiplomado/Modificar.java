@@ -62,7 +62,7 @@ public class Modificar extends AppCompatActivity {
         String nom = txtnombre.getText().toString();
         String ape = txtapellido.getText().toString();
         String ced = txtcedula.getText().toString();
-        Persona p = new Persona(id,fot,ced,nom,ape,genero_spiner.getSelectedItemPosition());
+        Persona p = new Persona(id,"1",ced,nom,ape,genero_spiner.getSelectedItemPosition());
 
         if(cedula.equals(ced)){
             p.modificar();
@@ -85,7 +85,7 @@ public class Modificar extends AppCompatActivity {
         Cancelar();
     }
     public void Cancelar(){
-        String nom = txtnombre.getText().toString();
+       /* String nom = txtnombre.getText().toString();
         String ape = txtapellido.getText().toString();
         String ced = txtcedula.getText().toString();
         Intent i = new Intent(Modificar.this,DetallePersona.class);
@@ -97,6 +97,10 @@ public class Modificar extends AppCompatActivity {
         b.putInt("sexo",genero_spiner.getSelectedItemPosition());
         b.putInt("foto",fot);
         i.putExtra("datos",b);
+        startActivity(i);*/
+        finish();
+        Intent i = new Intent(Modificar.this,Principal.class);
         startActivity(i);
+
     }
 }

@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.89"
-                android:background="@color/divider"
+
                 android:fontFamily="serif"
                 android:onClick="Modificar"
                 android:text="@string/modificar"
@@ -88,11 +88,10 @@
 
             <Button
                 android:id="@+id/btnborrar"
-                style="@style/Widget.AppCompat.Button.Small"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/cardview_light_background"
                 android:fontFamily="serif"
                 android:onClick="Cancelar"
                 android:text="@string/cancelar"

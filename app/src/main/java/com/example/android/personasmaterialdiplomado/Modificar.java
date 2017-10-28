@@ -87,18 +87,18 @@ public class Modificar extends AppCompatActivity {
         if(cedula.equals(ced)){
 
             p.modificar();
-            subir_foto(fot);
+            if (filePath !=null)subir_foto(fot);
             Snackbar.make(v, res.getString(R.string.mensaje_exito_modificar), Snackbar.LENGTH_LONG).setAction("action", null).show();
-            Cancelar();
+           // Cancelar();
         }else{
             if(Metodos.exitencia_persona(Datos.obtenerPersonas(),ced)){
                 txtcedula.setError(res.getString(R.string.persona_existente_error));
                 txtcedula.requestFocus();
               }else{
                 p.modificar();
-                subir_foto(fot);
+                if (filePath !=null)subir_foto(fot);
                 Snackbar.make(v, res.getString(R.string.mensaje_exito_modificar), Snackbar.LENGTH_LONG).setAction("action", null).show();
-                Cancelar();
+               // Cancelar();
             }
         }
 
@@ -126,6 +126,10 @@ public class Modificar extends AppCompatActivity {
         startActivity(i);
 
     }
+    public void onBackPressed(){
+        Cancelar();
+    }
+
 
     public void seleccionar_foto(View v){
         Intent i = new Intent();
@@ -147,6 +151,12 @@ public class Modificar extends AppCompatActivity {
     public void subir_foto(String foto){
         StorageReference childRef = storageReference.child(foto);
         UploadTask uploadTask = childRef.putFile(filePath);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Cancelar();
+            }
+        });
 
     }
 }

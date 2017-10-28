@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/contrasena"
-            android:inputType="textPassword" />
+            android:inputType="numberPassword" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -50,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:onClick="ingesar"
         android:text="@string/log_in" />
 
     <Button
@@ -57,6 +58,7 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="crear"
         android:text="@string/crear_cuenta" />
 
 </LinearLayout>
